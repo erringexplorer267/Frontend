@@ -16,7 +16,7 @@ const CIRCUIT_QUESTIONS = [
   {
     id: 2, name: "Potions Class Logic", house: "Slytherin", difficulty: "Easy",
     points: 150, question: "In a half-adder circuit, which two outputs are produced?",
-    hintImage: "https://www.wellpcb.com/wp-content/uploads/2022/10/1-8.jpg",
+    hintImage: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Half_Adder.svg/400px-Half_Adder.svg.png",
     answer: "sum and carry",
     description: "Professor Snape's arithmetic challenges await",
     hintType: "image"
@@ -692,7 +692,14 @@ const Circuits = ({ teamProgress, setProgress }) => {
 };
 
 const Coding = ({ setCodingScore }) => {
-  const [tempScore, setTempScore] = useState(0);
+  const [testCasesPassed, setTestCasesPassed] = useState('');
+
+  const handleTestCasesChange = (e) => {
+    const value = e.target.value;
+    setTestCasesPassed(value);
+    const score = parseInt(value) || 0;
+    setCodingScore(score * 10); // Each test case = 10 points (adjust multiplier as needed)
+  };
 
   return (
     <div className="text-center p-16 max-w-3xl mx-auto relative">
@@ -731,7 +738,7 @@ const Coding = ({ setCodingScore }) => {
       </h2>
       <div className="w-24 h-1 bg-gray-600 mx-auto mb-12 relative z-10"></div>
       <p className="text-gray-400 mb-16 text-base leading-relaxed relative z-10">
-        The ultimate test of logic: The Golden Snitch Algorithm. Follow the link below and input your score upon completion.
+        The ultimate test of logic: The Golden Snitch Algorithm. Follow the link below and input your test cases passed upon completion.
       </p>
 
       <a 
@@ -746,23 +753,24 @@ const Coding = ({ setCodingScore }) => {
       </a>
 
       <div className="mt-16 pt-12 border-t border-gray-800 relative z-10">
-        <label htmlFor="score-input" className="block text-xs uppercase tracking-widest text-gray-500 mb-6">
-          Input Your Score:
+        <label htmlFor="testcases-input" className="block text-xs uppercase tracking-widest text-gray-500 mb-6">
+          Number of Test Cases Passed:
         </label>
         <input
-          id="score-input"
+          id="testcases-input"
           type="number"
           placeholder="0"
           min="0"
-          value={tempScore}
-          onChange={(e) => {
-            const score = parseInt(e.target.value) || 0;
-            setTempScore(score);
-            setCodingScore(score);
-          }}
+          value={testCasesPassed}
+          onChange={handleTestCasesChange}
           className="w-full max-w-md mx-auto p-5 text-2xl text-center bg-transparent border-2 border-gray-700 text-white focus:outline-none focus:border-white transition-colors"
           style={{ fontFamily: 'Georgia, serif' }}
         />
+        {testCasesPassed && (
+          <p className="mt-4 text-green-400 text-sm uppercase tracking-wider">
+            Score: {parseInt(testCasesPassed) * 10} points
+          </p>
+        )}
       </div>
     </div>
   );
