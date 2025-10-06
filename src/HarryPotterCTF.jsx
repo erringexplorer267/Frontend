@@ -10,43 +10,77 @@ const CIRCUIT_QUESTIONS = [
     id: 1, name: "The Sorting Circuit", house: "Gryffindor", difficulty: "Easy",
     points: 100, question: "What is the output of a 2-input AND gate when both inputs are HIGH?",
     hint: "Think about when the gate allows current to pass through...", answer: "1",
-    description: "Begin your journey at the Sorting Hat's chamber"
+    description: "Begin your journey at the Sorting Hat's chamber",
+    hintType: "text"
   },
   {
     id: 2, name: "Potions Class Logic", house: "Slytherin", difficulty: "Easy",
     points: 150, question: "In a half-adder circuit, which two outputs are produced?",
-    hint: "One is the result, one is what you carry forward...", answer: "sum and carry",
-    description: "Professor Snape's arithmetic challenges await"
+    hintImage: "https://www.wellpcb.com/wp-content/uploads/2022/10/1-8.jpg",
+    answer: "sum and carry",
+    description: "Professor Snape's arithmetic challenges await",
+    hintType: "image"
   },
   {
     id: 3, name: "Charms of Multiplexing", house: "Ravenclaw", difficulty: "Medium",
     points: 200, question: "How many select lines are needed for an 8:1 multiplexer?",
     hint: "2^n = 8, solve for n...", answer: "3",
-    description: "Flitwick's magical selection circuits"
+    description: "Flitwick's magical selection circuits",
+    hintType: "text"
   },
   {
     id: 4, name: "Defense Against Dark Circuits", house: "Hufflepuff", difficulty: "Medium",
     points: 250, question: "What type of flip-flop toggles its output when both inputs are 1?",
-    hint: "It's named after its toggling behavior...", answer: "jk",
-    description: "Protected storage elements await discovery"
+    hintImage: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/JK_flip-flop.svg/400px-JK_flip-flop.svg.png",
+    answer: "jk",
+    description: "Protected storage elements await discovery",
+    hintType: "image"
   },
   {
     id: 5, name: "The Forbidden Forest of Karnaugh", house: "Gryffindor", difficulty: "Hard",
     points: 300, question: "In a K-map, what is the maximum number of cells that can be grouped for a 4-variable expression?",
     hint: "Think of the largest power of 2 within 16...", answer: "16",
-    description: "Navigate the maze of logic minimization"
+    description: "Navigate the maze of logic minimization",
+    hintType: "text"
   },
   {
     id: 6, name: "The Chamber of Sequential Secrets", house: "Slytherin", difficulty: "Hard",
     points: 350, question: "What is the modulus of a counter with 6 states?",
     hint: "Modulus equals the number of unique states...", answer: "6",
-    description: "Ancient sequential magic lies within"
+    description: "Ancient sequential magic lies within",
+    hintType: "text"
   },
   {
     id: 7, name: "The Triwizard Memory Tournament", house: "Ravenclaw", difficulty: "Expert",
     points: 400, question: "How many address lines are needed to address 1KB of memory?",
     hint: "1KB = 1024 bytes, find log₂(1024)...", answer: "10",
-    description: "The ultimate test of circuit mastery"
+    description: "The ultimate test of circuit mastery",
+    hintType: "text"
+  },
+  {
+    id: 8, name: "The Marauder's Decoder Ring", house: "Hufflepuff", difficulty: "Expert",
+    points: 450, question: "In a 3-to-8 decoder, how many output lines will be active (HIGH) at any given time?",
+    hint: "Only one output corresponds to each unique input combination...", answer: "1",
+    description: "Decode the secrets of digital logic",
+    hintType: "text"
+  },
+  {
+    id: 9, name: "The Patronus Oscillator", house: "Gryffindor", difficulty: "Expert",
+    points: 500, question: "What is the time period of a 555 timer in astable mode if R1=10kΩ, R2=10kΩ, and C=10μF?",
+    hint: "T = 0.693 × (R1 + 2×R2) × C. Calculate in seconds...", answer: "0.2079",
+    description: "Master the art of timing circuits",
+    hintType: "text"
+  },
+  {
+    id: 10, name: "The Elder Circuit Challenge", house: "Ravenclaw", difficulty: "Master",
+    points: 600, 
+    question: "Build a full working circuit in Tinkercad: Create a 4-bit binary counter using JK flip-flops that counts from 0 to 15 and displays the output on 4 LEDs.",
+    hint: "Access the Tinkercad challenge and build your circuit. Take a screenshot of your completed working circuit.",
+    tinkercadLink: "https://www.tinkercad.com/",
+    answer: "upload",
+    description: "The ultimate practical challenge awaits",
+    hintType: "text",
+    requiresUpload: true
   }
 ];
 
@@ -270,6 +304,7 @@ const Circuits = ({ teamProgress, setProgress }) => {
   const [answer, setAnswer] = useState('');
   const [showSuccess, setShowSuccess] = useState(false);
   const [attempts, setAttempts] = useState({});
+  const [uploadedImage, setUploadedImage] = useState(null);
 
   const circuitsScore = Object.values(teamProgress).reduce((sum, item) => sum + item.points, 0);
 
@@ -282,10 +317,40 @@ const Circuits = ({ teamProgress, setProgress }) => {
     return isCompleted(levelId - 1);
   }, [isCompleted]);
 
+  const handleImageUpload = (e) => {
+    const file = e.target.files[0];
+    if (file && file.type.startsWith('image/')) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setUploadedImage(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   const handleSubmit = () => {
     if (!selectedLevel) return;
 
     const level = selectedLevel;
+    
+    // Special handling for upload question
+    if (level.requiresUpload) {
+      if (!uploadedImage) {
+        console.log('Please upload your circuit screenshot!');
+        return;
+      }
+      // Mark as completed when image is uploaded
+      if (!isCompleted(level.id)) {
+        setProgress(level.id, level.points);
+      }
+      setShowSuccess(true);
+      setTimeout(() => setShowSuccess(false), 3000);
+      setUploadedImage(null);
+      setSelectedLevel(null);
+      return;
+    }
+
+    // Normal answer checking for other questions
     const normalizedAnswer = answer.toLowerCase().trim();
     const correctAnswers = level.answer.toLowerCase().split(',').map(a => a.trim());
     
@@ -332,6 +397,18 @@ const Circuits = ({ teamProgress, setProgress }) => {
           0%, 100% { opacity: 0.3; }
           50% { opacity: 1; }
         }
+        @keyframes pulse-glow {
+          0%, 100% { 
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.8),
+                        0 0 60px rgba(255, 215, 0, 0.6),
+                        0 0 90px rgba(255, 215, 0, 0.4);
+          }
+          50% { 
+            box-shadow: 0 0 40px rgba(255, 215, 0, 1),
+                        0 0 80px rgba(255, 215, 0, 0.8),
+                        0 0 120px rgba(255, 215, 0, 0.6);
+          }
+        }
         .float-spell {
           animation: float 8s ease-in-out infinite;
         }
@@ -340,6 +417,9 @@ const Circuits = ({ teamProgress, setProgress }) => {
         }
         .twinkle {
           animation: twinkle 3s ease-in-out infinite;
+        }
+        .animate-pulse-glow {
+          animation: pulse-glow 2s ease-in-out infinite;
         }
       `}</style>
       
@@ -574,11 +654,17 @@ const Circuits = ({ teamProgress, setProgress }) => {
                   {!isCompleted(selectedLevel.id) ? (
                     <button
                       onClick={handleSubmit}
-                      className="w-full py-5 bg-white text-black font-bold hover:bg-gray-200 transition-all duration-300 text-sm uppercase tracking-widest relative overflow-hidden group"
+                      className={`w-full py-5 font-bold transition-all duration-500 text-sm uppercase tracking-widest relative overflow-hidden group ${
+                        answer.trim() 
+                          ? 'bg-white text-black shadow-[0_0_30px_rgba(255,215,0,0.8)] animate-pulse-glow' 
+                          : 'bg-white text-black hover:bg-gray-200'
+                      }`}
                       style={{ letterSpacing: '0.2em' }}
                     >
                       <span className="relative z-10">Submit Answer</span>
-                      <div className="absolute inset-0 bg-gradient-to-r from-yellow-400 via-yellow-300 to-yellow-400 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+                      <div className={`absolute inset-0 bg-gradient-to-r from-yellow-400 via-yellow-300 to-yellow-400 transform transition-transform duration-300 ${
+                        answer.trim() ? 'translate-y-0' : 'translate-y-full group-hover:translate-y-0'
+                      }`}></div>
                     </button>
                   ) : (
                     <button
