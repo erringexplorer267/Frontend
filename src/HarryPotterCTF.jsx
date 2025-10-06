@@ -123,7 +123,7 @@ const Countdown = ({ onFinish }) => {
   const seconds = timeLeft % 60;
 
   return (
-    <div className="text-center p-16 max-w-2xl mx-auto">
+    <div className="text-center p-90 ">
       <h2 className="text-5xl text-white mb-8 tracking-wide hp-heading" style={{ letterSpacing: '0.1em' }}>Challenge Initiating...</h2>
       <p className="text-gray-400 text-xl mb-12 uppercase tracking-widest text-sm">The Marauder's Map will be revealed in:</p>
       <div className="text-8xl font-light text-white tracking-wider mb-4" style={{ fontFamily: 'Georgia, serif' }}>
@@ -141,7 +141,7 @@ const Landing = ({ onStart }) => {
   if (isReady) return <Countdown onFinish={() => onStart(teamName, selectedSet)} />;
 
   return (
-    <div className="text-center p-12 max-w-3xl mx-auto relative">
+    <div className="text-center  w-full relative">
       {/* Magical Background Elements */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
         <style>{`
@@ -185,8 +185,8 @@ const Landing = ({ onStart }) => {
         ))}
       </div>
       
-      <h1 className="text-6xl text-white mb-4 tracking-wide relative z-10 hp-title" style={{ letterSpacing: '0.15em' }}>
-        The Triwizard CTF Challenge
+      <h1 className="text-3xl text-white-200 mb-4 tracking-wide relative z-10 hp-sub-title" style={{ letterSpacing: '0.15em' }}>
+       Welcome to the Harry Potter Realm..!
       </h1>
       <div className="w-24 h-1 bg-gray-600 mx-auto mb-12 relative z-10"></div>
       <p className="text-gray-400 mb-16 text-lg uppercase tracking-wider text-sm relative z-10">
@@ -229,7 +229,7 @@ const Landing = ({ onStart }) => {
 };
 
 const Home = ({ teamName, setPage, handleSubmit }) => (
-  <div className="text-center p-12 max-w-5xl mx-auto relative">
+  <div className="text-center p-90 relative">
     {/* Magical Background */}
     <div className="fixed inset-0 pointer-events-none overflow-hidden">
       <style>{`
@@ -259,8 +259,8 @@ const Home = ({ teamName, setPage, handleSubmit }) => (
     <h2 className="text-5xl text-white mb-6 tracking-wide relative z-10 hp-heading" style={{ letterSpacing: '0.1em' }}>
       Welcome, {teamName}
     </h2>
-    <div className="w-24 h-1 bg-gray-600 mx-auto mb-12 relative z-10"></div>
-    <p className="text-gray-400 text-base mb-20 uppercase tracking-widest relative z-10">Choose your path to glory</p>
+    <div className="w-full h-1 bg-gray-600  mb-12 relative z-10"></div>
+    <p className="text-gray-200 text-base mb-20 uppercase tracking-widest relative z-10">Choose your path to glory</p>
 
     <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto mb-20 relative z-10">
       <button
@@ -481,8 +481,8 @@ const Circuits = ({ teamProgress, setProgress }) => {
           </div>
         </div>
       )}
-
-      <div className="w-full max-w-7xl mx-auto">
+      {/* Questions Display Section */}
+      <div className="w-full">
         <header className="flex items-center justify-center mb-16 relative">
           <div className="flex items-center gap-6">
             <div className="flex items-center gap-3 px-6 py-3 border border-gray-700">
@@ -578,10 +578,10 @@ const Circuits = ({ teamProgress, setProgress }) => {
             </div>
           </>
         ) : (
-          <div className="max-w-4xl mx-auto">
+          <div className="w-full mb-3">
             <button
               onClick={() => setSelectedLevel(null)}
-              className="mb-8 px-6 py-3 border border-gray-700 hover:border-white transition-colors text-sm uppercase tracking-widest"
+              className="mb-10 px-6 py-3 border border-gray-700 hover:border-white transition-colors text-sm uppercase tracking-widest"
               style={{ letterSpacing: '0.2em' }}
             >
               ← Back to Challenges
@@ -591,8 +591,8 @@ const Circuits = ({ teamProgress, setProgress }) => {
               borderColor: HOUSE_COLORS[selectedLevel.house].border,
               backgroundColor: HOUSE_COLORS[selectedLevel.house].bg
             }}>
-              <div className="p-10 border-b-2" style={{ borderColor: HOUSE_COLORS[selectedLevel.house].border }}>
-                <div className="flex items-start justify-between mb-6">
+              <div className="p-8 mb-1 -mt-4 border-b-2" style={{ borderColor: HOUSE_COLORS[selectedLevel.house].border }}>
+                <div className="flex items-start justify-between mb-0.5">
                   <h2 className="text-4xl text-white tracking-wide hp-heading" style={{ letterSpacing: '0.1em' }}>
                     {selectedLevel.name}
                   </h2>
@@ -612,27 +612,27 @@ const Circuits = ({ teamProgress, setProgress }) => {
                 </div>
               </div>
 
-              <div className="p-10">
-                <div className="mb-10 pb-10 border-b border-gray-800">
-                  <h3 className="text-xs uppercase tracking-widest text-gray-500 mb-6">
+              <div className="p-90">
+                <div className="mb-1 pb-10 border-b border-gray-800">
+                  <h3 className="text-s uppercase tracking-widest text-gray-200 mb-6">
                     The Challenge
                   </h3>
-                  <p className="text-2xl text-white leading-relaxed font-light" style={{ fontFamily: 'Georgia, serif' }}>
+                  <p className="text-2xl text-white leading-relaxed font-light" style={{ fontFamily: 'Georgia, serif ' }}>
                     {selectedLevel.question}
                   </p>
                 </div>
 
                 <div className="mb-10 p-6 border border-gray-800">
-                  <h4 className="text-xs uppercase tracking-widest text-gray-500 mb-4 flex items-center gap-2">
+                  <h4 className="text-xs uppercase tracking-widest text-gray-200 mb-4 flex items-center gap-2">
                     <Sparkles className="w-4 h-4" />
                     Hint
                   </h4>
-                  <p className="text-gray-400 text-sm">{selectedLevel.hint}</p>
+                  <p className="text-gray-300 text-sm">{selectedLevel.hint}</p>
                 </div>
 
                 <div className="space-y-6">
                   <div>
-                    <label className="block text-xs uppercase tracking-widest text-gray-500 mb-4">
+                    <label className="block text-xs uppercase tracking-widest text-gray-200 mb-4">
                       Your Answer:
                     </label>
                     <input
@@ -656,13 +656,13 @@ const Circuits = ({ teamProgress, setProgress }) => {
                       onClick={handleSubmit}
                       className={`w-full py-5 font-bold transition-all duration-500 text-sm uppercase tracking-widest relative overflow-hidden group ${
                         answer.trim() 
-                          ? 'bg-white text-black shadow-[0_0_30px_rgba(255,215,0,0.8)] animate-pulse-glow' 
-                          : 'bg-white text-black hover:bg-gray-200'
+                          ? 'bg-black text-white shadow-[0_0_5px_rgba(255,255,255,0.8)]' 
+                          : 'bg-black text-white hover:bg-gray-500 hover:border-white rounded-xl'
                       }`}
                       style={{ letterSpacing: '0.2em' }}
                     >
                       <span className="relative z-10">Submit Answer</span>
-                      <div className={`absolute inset-0 bg-gradient-to-r from-yellow-400 via-yellow-300 to-yellow-400 transform transition-transform duration-300 ${
+                      <div className={`absolute inset-0 bg-gradient-to-r from-blue-400 via-blue-300 to-blue-400 transform transition-transform duration-300 ${
                         answer.trim() ? 'translate-y-0' : 'translate-y-full group-hover:translate-y-0'
                       }`}></div>
                     </button>
@@ -702,7 +702,7 @@ const Coding = ({ setCodingScore }) => {
   };
 
   return (
-    <div className="text-center p-16 max-w-3xl mx-auto relative">
+    <div className="text-center p-8 relative w-full">
       {/* Magical Background */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
         <style>{`
@@ -718,7 +718,7 @@ const Coding = ({ setCodingScore }) => {
         
         {[...Array(10)].map((_, i) => (
           <div
-            key={i}
+            key={`wand-${i}`}
             className="absolute text-3xl"
             style={{
               left: `${Math.random() * 100}%`,
@@ -863,6 +863,12 @@ export default function App() {
             text-transform: uppercase;
             font-weight: 700;
           }
+            .hp-sub-title {
+            font-family: 'Cinzel', serif;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            font-weight: 500;
+          }
           
           .hp-heading {
             font-family: 'Cinzel', serif;
@@ -873,7 +879,7 @@ export default function App() {
         
         <header className="p-6 bg-black shadow-xl flex justify-between items-center border-b border-gray-900 sticky top-0 z-20">
           <h1 className="text-2xl text-white tracking-wider hp-title">
-            Wizard CTF {questionSet && `— ${questionSet.toUpperCase()}`}
+            ELECZZA {questionSet && `— ${questionSet.toUpperCase()}`}
           </h1>
           {page !== 'landing' && page !== 'score' && (
             <button 
@@ -885,7 +891,7 @@ export default function App() {
             </button>
           )}
         </header>
-        <main className="flex flex-grow w-full items-center justify-center p-4">
+        <main className="flex flex-grow w-full p-4">
             {renderPage()}
         </main>
     </div>
