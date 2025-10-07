@@ -8,8 +8,8 @@ const HACKERRANK_LINK = 'https://www.hackerrank.com/test-coding-challenge';
 const CIRCUIT_QUESTIONS = [
   {
     id: 1, name: "The Sorting Circuit", house: "Gryffindor", difficulty: "Easy",
-    points: 100, question: "What is the output of a 2-input AND gate when both inputs are HIGH?",
-    hint: "Think about when the gate allows current to pass through...", answer: "1",
+    points: 100, question: "Inside the Room of Requirement, glowing wires pulsed like living veins. Hermione pointed at a crystal orb that flickered only when energy flowed one way. 'Brilliant,' she whispered. 'It obeys the rule of direction – just like magic itself.' What is the electronic counterpart of Hermione’s 'one-way spell'?",
+    hint: "A magical gate that allows energy to flow forward,never backward..", answer: "Diode",
     description: "Begin your journey at the Sorting Hat's chamber",
     hintType: "text"
   },
