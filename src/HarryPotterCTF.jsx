@@ -4,6 +4,7 @@ import { Lock, Unlock, Star, Zap, Code, Clock, Trophy, Sparkles } from 'lucide-r
 // --- Data & Constants ---
 const TARGET_TIME_DEMO_MS = Date.now() + 9 * 1000;
 const HACKERRANK_LINK = 'https://www.hackerrank.com/test-coding-challenge'; 
+const BASE_URL = 'http://localhost:8000';
 
 const CIRCUIT_QUESTIONS = [
   {
@@ -702,18 +703,21 @@ const Coding = ({ setCodingScore }) => {
   };
 
   return (
-    <div className="text-center p-8 relative w-full">
+    <div className="text-center p-0.5  relative w-full">
       {/* Magical Background */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
         <style>{`
           @keyframes wandFloat {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(5deg); }
-          }
-          @keyframes glow {
-            0%, 100% { filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0.5)); }
-            50% { filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.8)); }
-          }
+  0%, 100% {
+    transform: translate(0px, 0px) rotate(0deg); /* Start: x=0, y=0 */
+  }
+  50% {
+    transform: translate(15px, -20px) rotate(5deg); /* Midpoint: Move right 15px, up 20px */
+  }
+}@keyframes glow {
+  0%, 100% { filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0.5)); }
+  50% { filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.8)); }
+}
         `}</style>
         
         {[...Array(10)].map((_, i) => (
